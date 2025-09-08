@@ -27,3 +27,59 @@ func (repo *RunningRepository) CreateRunning(running model.Running) error {
 	)
 	return err
 }
+
+func (repo *RunningRepository) FindRunningById(id int) (*model.Running, error) {
+	var running model.Running
+
+	err := repo.DB.QueryRow("SELECT * FROM Running WHERE Id = ?", id).Scan(
+		&running.Name,
+		&running.Local,
+		&running.Date,
+		&running.Distance,
+		&running.Hour,
+		&running.Minute,
+		&running.Second,
+		&running.Pace,
+		&running.Event,
+		&running.Image,
+		&running.ShoesId,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &running, nil
+}
+
+func (repo *RunningRepository) FindAllRunnings() ([]*model.Running, error) {
+	rows, err := repo.DB.Query("SELECT NAME, LOCAL, DATE, DISTANCE, HOUR, MINUTE, SECOND, PACE, EVENT, IMAGE, SHOESID")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var allRunnings []*model.Running
+
+	for rows.Next() {
+		var running model.Running
+		err := rows.Scan(
+			&running.Name,
+			&running.Local,
+			&running.Date,
+			&running.Distance,
+			&running.Hour,
+			&running.Minute,
+			&running.Second,
+			&running.Pace,
+			&running.Event,
+			&running.Image,
+			&running.ShoesId)
+		if err != nil {
+			return nil, err
+		}
+		allRunnings = append(allRunnings, &running)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return allRunnings, nil
+}
