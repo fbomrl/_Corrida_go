@@ -16,7 +16,7 @@ var (
 )
 
 type ShoesService struct {
-	repoShoes interfaces.ShoesRepositoryInterface
+	RepoShoes interfaces.ShoesRepositoryInterface
 }
 
 func (s *ShoesService) CreateShoesService(shoes model.Shoes) error {
@@ -29,5 +29,5 @@ func (s *ShoesService) CreateShoesService(shoes model.Shoes) error {
 	if shoes.Bought.After(time.Now()) {
 		return errFutureDate
 	}
-	return s.repoShoes.CreateShoes(shoes)
+	return s.RepoShoes.CreateShoes(shoes)
 }
