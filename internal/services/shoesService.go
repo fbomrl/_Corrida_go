@@ -10,10 +10,9 @@ import (
 )
 
 var (
-	ErrShoesNotFound = errors.New("Tênis não encontrado")
-	errEmptyName     = errors.New("Nome do tênis é obrigatório")
-	errNegativeKM    = errors.New("Não pode ter quilometragem negativa")
-	errFutureDate    = errors.New("Tênis não pode ser adquirido em data futura")
+	errEmptyName  = errors.New("nome do tênis é obrigatório")
+	errNegativeKM = errors.New("não pode ter quilometragem negativa")
+	errFutureDate = errors.New("tênis não pode ser adquirido em data futura")
 )
 
 type ShoesService struct {

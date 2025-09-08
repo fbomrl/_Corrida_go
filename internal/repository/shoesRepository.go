@@ -21,3 +21,48 @@ func (repo *ShoesRepository) CreateShoes(shoes model.Shoes) error {
 	)
 	return err
 }
+
+func (repo *ShoesRepository) FindShoesById(id int) (*model.Shoes, error) {
+	var shoes model.Shoes
+	err := repo.DB.QueryRow("SELECT * FROM Shoes WHERE Id = ?", id).Scan(
+		&shoes.Id,
+		&shoes.Name,
+		&shoes.TotalKm,
+		&shoes.Bought,
+		&shoes.Retired,
+		&shoes.ShoesImage,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+	return &shoes, nil
+}
+
+func (repo *ShoesRepository) FindAllShoes() ([]*model.Shoes, error) {
+	rows, err := repo.DB.Query("SELECT Id, Name, TotalKm, Bought, Retired, ShoesImage")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var allShoes []*model.Shoes
+
+	for rows.Next() {
+		var shoes model.Shoes
+		err := rows.Scan(&shoes.Id,
+			&shoes.Name,
+			&shoes.TotalKm,
+			&shoes.Bought,
+			&shoes.Retired,
+			&shoes.ShoesImage)
+		if err != nil {
+			return nil, err
+		}
+		allShoes = append(allShoes, &shoes)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return allShoes, nil
+}
