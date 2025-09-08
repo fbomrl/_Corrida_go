@@ -12,8 +12,18 @@ type RunningRepository struct {
 
 func (repo *RunningRepository) CreateRunning(running model.Running) error {
 	_, err := repo.DB.Exec(
-		"INSERT INTO Running (Name) VALUES (?)",
+		"INSERT INTO Running (Name, Local, Date, Distance, Hour, Minute, Second, Pace, Event, Image, ShoesId) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
 		running.Name,
+		running.Local,
+		running.Date,
+		running.Distance,
+		running.Hour,
+		running.Minute,
+		running.Second,
+		running.Pace,
+		running.Event,
+		running.Image,
+		running.ShoesId,
 	)
-	return nil
+	return err
 }
