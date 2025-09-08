@@ -6,4 +6,6 @@ import (
 
 type RunningRepositoryInterface interface {
 	CreateRunning(running model.Running) error
+	FindRunningById(id int) (*model.Running, error)
+	FindAllRunnings() ([]*model.Running, error)
 }
