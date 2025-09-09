@@ -1,0 +1,64 @@
+package services
+
+import (
+	"errors"
+	"time"
+
+	"github.com/fbomrl/_Corrida_go/internal/model"
+	"github.com/fbomrl/_Corrida_go/internal/repository/interfaces"
+)
+
+var (
+	errFutureDateRunning = errors.New("data não pode superior a data de hoje")
+	errEmptyLocal        = errors.New("local não pode ser vazio")
+	errInvalidTime       = errors.New("horário inválido")
+	errInvalidMinute     = errors.New("minuto inválido")
+	errInvalidSecond     = errors.New("segundo inválido")
+	errEventIsNUll       = errors.New("evento não pode ser nulo")
+	errShoesInvalid      = errors.New("calçado inválido")
+)
+
+type RunningService struct {
+	RepoRunning interfaces.RunningRepositoryInterface
+}
+
+func (s *RunningService) CreateRunningService(running model.Running) error {
+
+	if running.Name == "" || len(running.Name) == 0 {
+		return errEmptyLocal
+	}
+
+	if running.Local == "" || len(running.Local) == 0 {
+		return errEmptyLocal
+	}
+
+	if running.Date.After(time.Now()) {
+		return errFutureDateRunning
+	}
+
+	if running.Distance < 0 {
+		return errNegativeKM
+	}
+
+	if running.Hour < 0 || running.Hour > 23 {
+		return errInvalidTime
+	}
+
+	if running.Minute < 0 || running.Minute > 59 {
+		return errInvalidMinute
+	}
+
+	if running.Second < 0 || running.Second > 59 {
+		return errInvalidSecond
+	}
+
+	if !running.Event {
+		return errEventIsNUll
+	}
+
+	if running.ShoesId == 0 {
+		return errShoesInvalid
+	}
+
+	return s.RepoRunning.CreateRunning(running)
+}

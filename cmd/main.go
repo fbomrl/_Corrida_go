@@ -13,6 +13,7 @@ import (
 )
 
 var servShoes *services.ShoesService
+var servRunning *services.RunningService
 
 func main() {
 	//CARREGA .ENV
@@ -35,7 +36,9 @@ func main() {
 
 	//INJEÇÃO DE DEPENDÊNCIAS
 	repoShoes := &repository.ShoesRepository{DB: db}
+	repoRunning := &repository.RunningRepository{DB: db}
 	servShoes = &services.ShoesService{RepoShoes: repoShoes}
+	servRunning = &services.RunningService{RepoRunning: repoRunning}
 
 	//REGISTRO DE ROTAS
 	mux := routes.Register(servShoes)
