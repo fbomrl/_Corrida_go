@@ -22,17 +22,27 @@
                 <table class="table table-striped table-hover mb-0">
                     <thead>
                         <tr>
+                            <th>Data</th>
                             <th>Nome</th>
                             <th>Local</th>
-                            <th>Data</th>
+                            <th>KM</th>
+                            <th>Tempo</th>
+                            <th>Pace</th>
+                            <th>Evento</th>
+                            <th>Calçado</th>
                         </tr>
                     </thead>
                     <tbody>
                         {{range .}}
                         <tr>
+                            <td>{{.Date.Format "02/01/06"}}</td>
                             <td>{{.Name}}</td>
                             <td>{{.Local}}</td>
-                            <td>{{.Date}}</td>
+                            <td>{{.Distance}}</td>
+                            <td>{{printf "%02d:%02d:%02d" .Hour .Minute .Second}}</td>
+                            <td>{{.Pace}}</td>
+                            <td>{{.Event}}</td>
+                            <td>{{.ShoesId}}</td>
                         </tr>
                         {{end}}    
                     </tbody>

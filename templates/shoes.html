@@ -34,9 +34,9 @@
                         <tr>
                             <td>{{.Name}}</td>
                             <td>{{.TotalKm}}</td>
-                            <td>{{.Bought}}</td>
-                            <td>{{.Retired}}</td>
-                            <td>{{.ShoesImage}}</td>
+                            <td>{{.Bought.Format "02/01/2006"}}</td>
+                            <td>{{if .Retired}}{{.Retired.Format "02/01/2006"}}{{else}}Ativo{{end}}</td>
+                            <td>{{.Bought.Format "02/01/2006"}}</td>
                         </tr>
                         {{end}}    
                     </tbody>

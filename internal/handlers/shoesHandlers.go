@@ -12,12 +12,21 @@ var temp = template.Must(template.ParseGlob("../templates/*.html"))
 
 func Shoes(service *services.ShoesService) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		shoes, err := service.RepoShoes.FindAllShoes()
+		shoes, err := service.FindAllShoesService()
 		if err != nil {
 			log.Printf("Erro ao buscar calçados: %v", err)
 			http.Error(w, "Erro ao buscar calçados", http.StatusInternalServerError)
 			return
 		}
-		temp.ExecuteTemplate(w, "shoes", shoes)
+
+		log.Printf("Número de calçados encontrados: %d", len(shoes))
+		for i, shoe := range shoes {
+			log.Printf("Calçado %d: ID=%d, Name=%s, TotalKm=%.2f",
+				i, shoe.Id, shoe.Name, shoe.TotalKm)
+		}
+
+		temp.ExecuteTemplate(w, "shoes", map[string]interface{}{
+			"Shoes": shoes,
+		})
 	}
 }

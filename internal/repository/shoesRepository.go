@@ -24,7 +24,8 @@ func (repo *ShoesRepository) CreateShoes(shoes model.Shoes) error {
 
 func (repo *ShoesRepository) FindShoesById(id int) (*model.Shoes, error) {
 	var shoes model.Shoes
-	err := repo.DB.QueryRow("SELECT * FROM Shoes WHERE Id = ?", id).Scan(
+
+	err := repo.DB.QueryRow("SELECT Id, Name, TotalKm, Bought, Retired, ShoesImage FROM Shoes WHERE Id = ?", id).Scan(
 		&shoes.Id,
 		&shoes.Name,
 		&shoes.TotalKm,
@@ -36,6 +37,7 @@ func (repo *ShoesRepository) FindShoesById(id int) (*model.Shoes, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return &shoes, nil
 }
 
@@ -50,17 +52,22 @@ func (repo *ShoesRepository) FindAllShoes() ([]*model.Shoes, error) {
 
 	for rows.Next() {
 		var shoes model.Shoes
-		err := rows.Scan(&shoes.Id,
+		err := rows.Scan(
+			&shoes.Id,
 			&shoes.Name,
 			&shoes.TotalKm,
 			&shoes.Bought,
 			&shoes.Retired,
-			&shoes.ShoesImage)
+			&shoes.ShoesImage,
+		)
+
 		if err != nil {
 			return nil, err
 		}
+
 		allShoes = append(allShoes, &shoes)
 	}
+
 	if err = rows.Err(); err != nil {
 		return nil, err
 	}

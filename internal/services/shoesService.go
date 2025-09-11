@@ -41,7 +41,6 @@ func (s *ShoesService) FindShoesByIdService(id int) (*model.Shoes, error) {
 	return shoes, nil
 }
 
-func (s *ShoesService) FindAllShoesService(
-	id int, name string, totalKm float64, bought time.Time, retired time.Time, shoesImage string) ([]*model.Shoes, error) {
+func (s *ShoesService) FindAllShoesService() ([]*model.Shoes, error) {
 	return s.RepoShoes.FindAllShoes()
 }
