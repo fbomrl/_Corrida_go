@@ -16,6 +16,10 @@ var servShoes *services.ShoesService
 var servRunning *services.RunningService
 
 func main() {
+
+	fs := http.FileServer(http.Dir("../web/static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
 	//CARREGA .ENV
 	err := godotenv.Load("../.env")
 	if err != nil {

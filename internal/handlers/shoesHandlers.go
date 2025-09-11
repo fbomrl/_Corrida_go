@@ -25,8 +25,10 @@ func Shoes(service *services.ShoesService) http.HandlerFunc {
 				i, shoe.Id, shoe.Name, shoe.TotalKm)
 		}
 
-		temp.ExecuteTemplate(w, "shoes", map[string]interface{}{
-			"Shoes": shoes,
-		})
+		if err := temp.ExecuteTemplate(w, "shoes", shoes); err != nil {
+			log.Printf("Erro ao renderizar template: %v", err)
+			http.Error(w, "Erro ao renderizar template", http.StatusInternalServerError)
+			return
+		}
 	}
 }

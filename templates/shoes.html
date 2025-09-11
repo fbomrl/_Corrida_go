@@ -22,21 +22,22 @@
                 <table class="table table-striped table-hover mb-0">
                     <thead>
                         <tr>
+                            <th>Imagem</th>
                             <th>Nome</th>
                             <th>KM total</th>
                             <th>Adquirido</th>
                             <th>Aposentado</th>
-                            <th>Imagem</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
                         {{range .}}
                         <tr>
-                            <td>{{.Name}}</td>
+                            <td>
+<img src="/static/images/{{.ShoesImage}}.png" alt="{{.Name}}" width="30">                            <td>{{.Name}}</td>
                             <td>{{.TotalKm}}</td>
-                            <td>{{.Bought.Format "02/01/2006"}}</td>
-                            <td>{{if .Retired}}{{.Retired.Format "02/01/2006"}}{{else}}Ativo{{end}}</td>
-                            <td>{{.Bought.Format "02/01/2006"}}</td>
+                            <td>{{.Bought.Format "02/01/06"}}</td>
+                            <td>{{if .Retired}}{{.Retired.Format "02/01/06"}}{{else}}Ativo{{end}}</td>
                         </tr>
                         {{end}}    
                     </tbody>
