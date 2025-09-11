@@ -41,7 +41,7 @@ func main() {
 	servRunning = &services.RunningService{RepoRunning: repoRunning}
 
 	//REGISTRO DE ROTAS
-	mux := routes.Register(servShoes)
+	mux := routes.Register(servShoes, servRunning)
 
 	//INICIA SERVIDOR
 	log.Println("Servidor rodando na porta 8000")
