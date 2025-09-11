@@ -16,6 +16,7 @@ var (
 	errInvalidSecond     = errors.New("segundo inválido")
 	errEventIsNUll       = errors.New("evento não pode ser nulo")
 	errShoesInvalid      = errors.New("calçado inválido")
+	errRunningsNotFound  = errors.New("corrida não localizada")
 )
 
 type RunningService struct {
@@ -61,4 +62,17 @@ func (s *RunningService) CreateRunningService(running model.Running) error {
 	}
 
 	return s.RepoRunning.CreateRunning(running)
+}
+
+func (s *RunningService) FindRunningByIdService(id int) (*model.Running, error) {
+	running, err := s.RepoRunning.FindRunningById(id)
+	if err != nil || running == nil {
+		return nil, errRunningsNotFound
+	}
+	return running, nil
+}
+
+func (s *RunningService) FindAllShoesService(id int, name string, local string, date time.Time, distance float64,
+	hour int, minute int, second int, pace float64, event bool, image string, shoesId int) ([]*model.Running, error) {
+	return s.RepoRunning.FindAllRunnings()
 }

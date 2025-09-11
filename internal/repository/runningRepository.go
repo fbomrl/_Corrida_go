@@ -51,7 +51,7 @@ func (repo *RunningRepository) FindRunningById(id int) (*model.Running, error) {
 }
 
 func (repo *RunningRepository) FindAllRunnings() ([]*model.Running, error) {
-	rows, err := repo.DB.Query("SELECT NAME, LOCAL, DATE, DISTANCE, HOUR, MINUTE, SECOND, PACE, EVENT, IMAGE, SHOESID")
+	rows, err := repo.DB.Query("SELECT Name, Local, Date, Distance, Hour, Minute, Second, Pace, Event, Image, ShoesId FROM Running")
 	if err != nil {
 		return nil, err
 	}

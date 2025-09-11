@@ -7,10 +7,12 @@ import (
 	"github.com/fbomrl/_Corrida_go/internal/services"
 )
 
-func Register(service *services.ShoesService) *http.ServeMux {
+func Register(shoesService *services.ShoesService, runningService *services.RunningService) *http.ServeMux {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/", handlers.Index(service))
+	mux.HandleFunc("/", handlers.Home())
+	mux.HandleFunc("/shoes", handlers.Shoes(shoesService))
+	mux.HandleFunc("/runnings", handlers.Runnings(runningService))
 
 	return mux
 }
