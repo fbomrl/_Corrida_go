@@ -8,7 +8,7 @@ import (
 	"github.com/fbomrl/_Corrida_go/internal/services"
 )
 
-var temp = template.Must(template.ParseGlob("../templates/*.html"))
+var temp = template.Must(template.ParseGlob("templates/*.html"))
 
 func Shoes(service *services.ShoesService) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -21,7 +21,7 @@ func Shoes(service *services.ShoesService) http.HandlerFunc {
 
 		log.Printf("Número de calçados encontrados: %d", len(shoes))
 		for i, shoe := range shoes {
-			log.Printf("Calçado %d: ID=%d, Name=%s, TotalKm=%.2f",
+			log.Printf("Calçado %s: ID=%d, Name=%s, TotalKm=%.2f",
 				i, shoe.Id, shoe.Name, shoe.TotalKm)
 		}
 

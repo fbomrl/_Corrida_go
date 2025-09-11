@@ -8,7 +8,7 @@ import (
 	"github.com/fbomrl/_Corrida_go/internal/services"
 )
 
-var tempRunning = template.Must(template.ParseGlob("../templates/*.html"))
+var tempRunning = template.Must(template.ParseGlob("templates/*.html"))
 
 func Runnings(service *services.RunningService) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
