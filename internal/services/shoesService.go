@@ -10,9 +10,10 @@ import (
 )
 
 var (
-	errEmptyName  = errors.New("nome do tênis é obrigatório")
-	errNegativeKM = errors.New("não pode ter quilometragem negativa")
-	errFutureDate = errors.New("tênis não pode ser adquirido em data futura")
+	errEmptyName     = errors.New("nome do calçado é obrigatório")
+	errNegativeKM    = errors.New("não pode ter quilometragem negativa")
+	errFutureDate    = errors.New("calçado não pode ser adquirido em data futura")
+	errShoesNotFound = errors.New("calçado não encontrado")
 )
 
 type ShoesService struct {
@@ -30,4 +31,17 @@ func (s *ShoesService) CreateShoesService(shoes model.Shoes) error {
 		return errFutureDate
 	}
 	return s.RepoShoes.CreateShoes(shoes)
+}
+
+func (s *ShoesService) FindShoesByIdService(id int) (*model.Shoes, error) {
+	shoes, err := s.RepoShoes.FindShoesById(id)
+	if err != nil || shoes == nil {
+		return nil, errShoesNotFound
+	}
+	return shoes, nil
+}
+
+func (s *ShoesService) FindAllShoesService(
+	id int, name string, totalKm float64, bought time.Time, retired time.Time, shoesImage string) ([]*model.Shoes, error) {
+	return s.RepoShoes.FindAllShoes()
 }

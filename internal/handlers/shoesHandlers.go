@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 	"text/template"
 
@@ -13,6 +14,7 @@ func Index(service *services.ShoesService) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		shoes, err := service.RepoShoes.FindAllShoes()
 		if err != nil {
+			log.Printf("Erro ao buscar calçados: %v", err)
 			http.Error(w, "Erro ao buscar calçados", http.StatusInternalServerError)
 			return
 		}

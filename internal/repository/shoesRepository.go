@@ -40,7 +40,7 @@ func (repo *ShoesRepository) FindShoesById(id int) (*model.Shoes, error) {
 }
 
 func (repo *ShoesRepository) FindAllShoes() ([]*model.Shoes, error) {
-	rows, err := repo.DB.Query("SELECT Id, Name, TotalKm, Bought, Retired, ShoesImage")
+	rows, err := repo.DB.Query("SELECT Id, Name, TotalKm, Bought, Retired, ShoesImage FROM Shoes")
 	if err != nil {
 		return nil, err
 	}
