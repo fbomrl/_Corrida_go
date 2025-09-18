@@ -13,6 +13,7 @@ func Register(shoesService *services.ShoesService, runningService *services.Runn
 	mux.HandleFunc("/", handlers.Home())
 	mux.HandleFunc("/shoes", handlers.Shoes(shoesService))
 	mux.HandleFunc("/runnings", handlers.Runnings(runningService))
+	mux.HandleFunc("/createrunnings", handlers.CreateRunnings(runningService))
 
 	return mux
 }

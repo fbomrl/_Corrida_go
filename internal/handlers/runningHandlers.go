@@ -73,3 +73,14 @@ func Runnings(service *services.RunningService) http.HandlerFunc {
 
 	}
 }
+
+func CreateRunnings(service *services.RunningService) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet {
+			err := tempRunning.ExecuteTemplate(w, "createRunnings", nil)
+			if err != nil {
+				http.Error(w, "Erro ao carregar página de criação de corridas", http.StatusInternalServerError)
+			}
+		}
+	}
+}
