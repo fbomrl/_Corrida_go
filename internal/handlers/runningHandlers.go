@@ -39,7 +39,7 @@ func Runnings(service *services.RunningService) http.HandlerFunc {
 			image := r.FormValue("image")
 			shoesIdStr := r.FormValue("shoesid")
 
-			date, err := time.Parse("02-01-2006", dateStr)
+			date, err := time.Parse("2006-01-02", dateStr)
 			if err != nil {
 				http.Error(w, "Data inválida", http.StatusBadRequest)
 			}
@@ -65,6 +65,7 @@ func Runnings(service *services.RunningService) http.HandlerFunc {
 
 			err = service.CreateRunningService(newRunning)
 			if err != nil {
+				log.Printf("Erro", err)
 				http.Error(w, "Erro ao criar corrida", http.StatusInternalServerError)
 				return
 			}

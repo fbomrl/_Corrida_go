@@ -14,7 +14,6 @@ var (
 	errInvalidTime       = errors.New("horário inválido")
 	errInvalidMinute     = errors.New("minuto inválido")
 	errInvalidSecond     = errors.New("segundo inválido")
-	errEventIsNUll       = errors.New("evento não pode ser nulo")
 	errShoesInvalid      = errors.New("calçado inválido")
 	errRunningsNotFound  = errors.New("corrida não localizada")
 )
@@ -51,10 +50,6 @@ func (s *RunningService) CreateRunningService(running model.Running) error {
 
 	if running.Second < 0 || running.Second > 59 {
 		return errInvalidSecond
-	}
-
-	if !running.Event {
-		return errEventIsNUll
 	}
 
 	if running.ShoesId == 0 {
