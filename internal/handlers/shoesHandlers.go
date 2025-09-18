@@ -21,7 +21,7 @@ func Shoes(service *services.ShoesService) http.HandlerFunc {
 
 		log.Printf("Número de calçados encontrados: %d", len(shoes))
 		for i, shoe := range shoes {
-			log.Printf("Calçado %s: ID=%d, Name=%s, TotalKm=%.2f",
+			log.Printf("Calçado %d: ID=%d, Name=%s, TotalKm=%.2f",
 				i, shoe.Id, shoe.Name, shoe.TotalKm)
 		}
 
