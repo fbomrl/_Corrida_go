@@ -1,0 +1,73 @@
+{{define "createRunnings"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Adicionar treino/corrida</title>
+</head>
+<body class="container mt-5">
+    <h1 class="mb-4">Criar Treino ou Corrida</h1>
+    <form action="/runnings" method="post">
+        <div class="form-group">
+            <label for="name">Nome</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="local">Local</label>
+            <input type="text" class="form-control" id="local" name="local" required>
+        </div>
+
+        <div class="form-group">
+            <label for="date">Data</label>
+            <input type="date" class="form-control" id="date" name="date" required>
+        </div>
+
+        <div class="form-group">
+            <label for="distance">Distância (Km)</label>
+            <input type="number" step="0.01" class="form-control" id="distance" name="distance" required>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="hour">Horas</label>
+                <input type="number" class="form-control" id="hour" name="hour" min="0" required>
+            </div>
+            <div class="form-group col">
+                <label for="minute">Minutos</label>
+                <input type="number" class="form-control" id="minute" name="minute" min="0" max="59" required>
+            </div>
+            <div class="form-group col">
+                <label for="second">Segundos</label>
+                <input type="number" class="form-control" id="second" name="second" min="0" max="59" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="event">Evento</label>
+            <select class="form-control" id="event" name="event">
+                <option value="false" selected>Não</option>
+                <option value="true">Sim</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="image">Imagem (URL)</label>
+            <input type="text" class="form-control" id="image" name="image">
+        </div>
+
+        <div class="form-group">
+            <label for="shoesid">ID do Tênis</label>
+            <input type="number" class="form-control" id="shoesid" name="shoesid" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a href="/runnings" class="btn btn-secondary">Cancelar</a>
+    </form>
+</body>
+</html>
+{{end}}
