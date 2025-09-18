@@ -61,6 +61,10 @@ func (s *RunningService) CreateRunningService(running model.Running) error {
 		return errShoesInvalid
 	}
 
+	totalSeconds := (running.Hour * 3600) + (running.Minute * 60) + running.Second
+	running.Pace = float64(totalSeconds) / 60.0 / running.Distance
+	running.AverageSpeed = running.Distance / (float64(totalSeconds) / 3600.0)
+
 	return s.RepoRunning.CreateRunning(running)
 }
 
@@ -73,6 +77,6 @@ func (s *RunningService) FindRunningByIdService(id int) (*model.Running, error) 
 }
 
 func (s *RunningService) FindAllShoesService(id int, name string, local string, date time.Time, distance float64,
-	hour int, minute int, second int, pace float64, event bool, image string, shoesId int) ([]*model.Running, error) {
+	hour int, minute int, second int, pace float64, event bool, image string, shoesId int, averageSpeed float64) ([]*model.Running, error) {
 	return s.RepoRunning.FindAllRunnings()
 }

@@ -12,7 +12,7 @@ type RunningRepository struct {
 
 func (repo *RunningRepository) CreateRunning(running model.Running) error {
 	_, err := repo.DB.Exec(
-		"INSERT INTO Running (Name, Local, Date, Distance, Hour, Minute, Second, Pace, Event, Image, ShoesId) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+		"INSERT INTO Running (Name, Local, Date, Distance, Hour, Minute, Second, Pace, Event, Image, ShoesId, AverageSpeed) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
 		running.Name,
 		running.Local,
 		running.Date,
@@ -24,6 +24,7 @@ func (repo *RunningRepository) CreateRunning(running model.Running) error {
 		running.Event,
 		running.Image,
 		running.ShoesId,
+		running.AverageSpeed,
 	)
 	return err
 }
@@ -43,6 +44,7 @@ func (repo *RunningRepository) FindRunningById(id int) (*model.Running, error) {
 		&running.Event,
 		&running.Image,
 		&running.ShoesId,
+		&running.AverageSpeed,
 	)
 	if err != nil {
 		return nil, err
@@ -72,7 +74,9 @@ func (repo *RunningRepository) FindAllRunnings() ([]*model.Running, error) {
 			&running.Pace,
 			&running.Event,
 			&running.Image,
-			&running.ShoesId)
+			&running.ShoesId,
+			&running.AverageSpeed,
+		)
 		if err != nil {
 			return nil, err
 		}
