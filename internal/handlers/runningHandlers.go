@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -12,6 +13,12 @@ import (
 )
 
 var tempRunning = template.Must(template.ParseGlob("templates/*.html"))
+
+func formatPace(paceDecimal float64) string {
+	minutos := int(paceDecimal)
+	segundos := (paceDecimal - float64(minutos)) * 60
+	return fmt.Sprintf("%d:%02.0f", minutos, segundos)
+}
 
 func Runnings(service *services.RunningService) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -25,6 +32,11 @@ func Runnings(service *services.RunningService) http.HandlerFunc {
 				http.Error(w, "Erro ao buscar corridas", http.StatusInternalServerError)
 				return
 			}
+
+			for i := range runnings {
+				runnings[i].PaceFormatted = formatPace(runnings[i].Pace)
+			}
+
 			tempRunning.ExecuteTemplate(w, "runnings", runnings)
 
 		case http.MethodPost:
@@ -42,6 +54,7 @@ func Runnings(service *services.RunningService) http.HandlerFunc {
 			date, err := time.Parse("2006-01-02", dateStr)
 			if err != nil {
 				http.Error(w, "Data inválida", http.StatusBadRequest)
+				return
 			}
 			distance, _ := strconv.ParseFloat(distanceStr, 64)
 			hour, _ := strconv.Atoi(hourStr)
@@ -65,13 +78,12 @@ func Runnings(service *services.RunningService) http.HandlerFunc {
 
 			err = service.CreateRunningService(newRunning)
 			if err != nil {
-				log.Printf("Erro", err)
+				log.Printf("Erro ao criar corrida: %v", err)
 				http.Error(w, "Erro ao criar corrida", http.StatusInternalServerError)
 				return
 			}
 			http.Redirect(w, r, "/runnings", http.StatusSeeOther)
 		}
-
 	}
 }
 

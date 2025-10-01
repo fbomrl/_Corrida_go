@@ -36,7 +36,7 @@
                         {{range .}}
                         <tr>
                             <td>
-                            <img src="/static/{{.ShoesImage}}.png" alt="{{.Name}}" width="30">                         <td>{{.Name}}</td>
+                            <img src="/static/{{.ShoesImage}}.png" alt="{{.Name}}" width="30"><td>{{.Name}}</td>
                             <td>{{.TotalKm}}</td>
                             <td>{{.Bought.Format "02/01/06"}}</td>
                             <td>{{if .Retired}}{{.Retired.Format "02/01/06"}}{{else}}Ativo{{end}}</td>
