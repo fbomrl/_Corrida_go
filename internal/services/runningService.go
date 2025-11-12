@@ -66,8 +66,14 @@ func (s *RunningService) CreateRunningService(running model.Running) error {
 		return err
 	}
 
-	shoes.TotalKm += running.Distance
-	err = s.RepoShoes.UpdateShoes(*shoes)
+	shoes, err := s.RepoShoes.FindShoesById(running.ShoesId)
+	if err != nil || shoes == nil {
+		return errShoesInvalid
+	}
+
+	shoes.TotalKm = shoes.TotalKm + running.Distance
+
+	err = s.RepoShoes.UpdateShoesKm(shoes.Id, shoes.TotalKm)
 	if err != nil {
 		return err
 	}

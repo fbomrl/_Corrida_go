@@ -73,3 +73,23 @@ func (repo *ShoesRepository) FindAllShoes() ([]*model.Shoes, error) {
 	}
 	return allShoes, nil
 }
+
+func (repo *ShoesRepository) UpdateShoes(shoes model.Shoes) error {
+	_, err := repo.DB.Exec(
+		"UPDATE SHOES SET Name = ?, TotalKm = ?, Bought = ?, Retired = ? WHERE Id = ?",
+		shoes.Name, shoes.TotalKm, shoes.Bought, shoes.Retired, shoes.Id)
+
+	return err
+}
+
+func (repo *ShoesRepository) UpdateShoesKm(id int, totalKm float64) error {
+	_, err := repo.DB.Exec(
+		"UPDATE SHOES SET TotalKm = ? WHERE Id = ?",
+		totalKm,
+		id,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
