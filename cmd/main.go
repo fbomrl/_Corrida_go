@@ -17,9 +17,6 @@ var servRunning *services.RunningService
 
 func main() {
 
-	fs := http.FileServer(http.Dir("web/static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
-
 	//CARREGA .ENV
 	err := godotenv.Load(".env")
 	if err != nil {
@@ -50,6 +47,9 @@ func main() {
 
 	//REGISTRO DE ROTAS
 	mux := routes.Register(servShoes, servRunning)
+
+	fs := http.FileServer(http.Dir("web/static"))
+	mux.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	//INICIA SERVIDOR
 	log.Println("Servidor rodando na porta 8000")

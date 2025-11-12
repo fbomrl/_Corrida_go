@@ -12,7 +12,7 @@ type ShoesRepository struct {
 
 func (repo *ShoesRepository) CreateShoes(shoes model.Shoes) error {
 	_, err := repo.DB.Exec(
-		"INSERT INTO Shoes (Name, TotalKm, Bought, Retired, ShoesImage) VALUES(?,?,?,?,?)",
+		"INSERT INTO Shoes (Name, TotalKm, Bought, Retired, ShoesImage) VALUES (@p1, @p2, @p3, @p4, @p5)",
 		shoes.Name,
 		shoes.TotalKm,
 		shoes.Bought,
@@ -25,7 +25,7 @@ func (repo *ShoesRepository) CreateShoes(shoes model.Shoes) error {
 func (repo *ShoesRepository) FindShoesById(id int) (*model.Shoes, error) {
 	var shoes model.Shoes
 
-	err := repo.DB.QueryRow("SELECT Id, Name, TotalKm, Bought, Retired, ShoesImage FROM Shoes WHERE Id = ?", id).Scan(
+	err := repo.DB.QueryRow("SELECT Id, Name, TotalKm, Bought, Retired, ShoesImage FROM Shoes WHERE Id = @p1", id).Scan(
 		&shoes.Id,
 		&shoes.Name,
 		&shoes.TotalKm,
@@ -76,15 +76,14 @@ func (repo *ShoesRepository) FindAllShoes() ([]*model.Shoes, error) {
 
 func (repo *ShoesRepository) UpdateShoes(shoes model.Shoes) error {
 	_, err := repo.DB.Exec(
-		"UPDATE SHOES SET Name = ?, TotalKm = ?, Bought = ?, Retired = ? WHERE Id = ?",
+		"UPDATE Shoes SET Name = @p1, TotalKm = @p2, Bought = @p3, Retired = @p4 WHERE Id = @p5",
 		shoes.Name, shoes.TotalKm, shoes.Bought, shoes.Retired, shoes.Id)
-
 	return err
 }
 
 func (repo *ShoesRepository) UpdateShoesKm(id int, totalKm float64) error {
 	_, err := repo.DB.Exec(
-		"UPDATE SHOES SET TotalKm = ? WHERE Id = ?",
+		"UPDATE Shoes SET TotalKm = @p1 WHERE Id = @p2",
 		totalKm,
 		id,
 	)
