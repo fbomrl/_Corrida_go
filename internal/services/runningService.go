@@ -20,6 +20,7 @@ var (
 
 type RunningService struct {
 	RepoRunning interfaces.RunningRepositoryInterface
+	RepoShoes   interfaces.ShoesRepositoryInterface
 }
 
 func (s *RunningService) CreateRunningService(running model.Running) error {
@@ -60,7 +61,18 @@ func (s *RunningService) CreateRunningService(running model.Running) error {
 	running.Pace = float64(totalSeconds) / 60.0 / running.Distance
 	running.AverageSpeed = running.Distance / (float64(totalSeconds) / 3600.0)
 
-	return s.RepoRunning.CreateRunning(running)
+	err := s.RepoRunning.CreateRunning(running)
+	if err != nil {
+		return err
+	}
+
+	shoes.TotalKm += running.Distance
+	err = s.RepoShoes.UpdateShoes(*shoes)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (s *RunningService) FindRunningByIdService(id int) (*model.Running, error) {

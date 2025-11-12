@@ -41,8 +41,12 @@ func main() {
 	//INJEÇÃO DE DEPENDÊNCIAS
 	repoShoes := &repository.ShoesRepository{DB: db}
 	repoRunning := &repository.RunningRepository{DB: db}
+
 	servShoes = &services.ShoesService{RepoShoes: repoShoes}
-	servRunning = &services.RunningService{RepoRunning: repoRunning}
+	servRunning = &services.RunningService{
+		RepoRunning: repoRunning,
+		RepoShoes:   repoShoes,
+	}
 
 	//REGISTRO DE ROTAS
 	mux := routes.Register(servShoes, servRunning)
